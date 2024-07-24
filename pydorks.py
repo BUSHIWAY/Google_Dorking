@@ -9,6 +9,7 @@ main_websites = {
     'pythondocs': 'docs.python.org',
     'youtube': 'youtube.com',
     'github': 'github.com',
+    'giters': 'giters.com',
     'linkedin': 'linkedin.com',
     'geeksforgeeks':'geeksforgeeks.org',
     'w3schools': 'w3schools.com',
