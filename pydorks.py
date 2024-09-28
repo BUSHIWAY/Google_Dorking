@@ -22,10 +22,41 @@ main_websites = {
     'instagram':'instagram.com'
 }
 
+def logo():
+    print("""
+            ██████╗ ██╗   ██╗██████╗  ██████╗ ██████╗ ██╗  ██╗███████╗
+            ██╔══██╗╚██╗ ██╔╝██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝██╔════╝
+            ██████╔╝ ╚████╔╝ ██║  ██║██║   ██║██████╔╝█████╔╝ ███████╗
+            ██╔═══╝   ╚██╔╝  ██║  ██║██║   ██║██╔══██╗██╔═██╗ ╚════██║
+            ██║        ██║   ██████╔╝╚██████╔╝██║  ██║██║  ██╗███████║
+            ╚═╝        ╚═╝   ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+                                                            
+            A simple command-line tool for automating search on Google.
+            \n""")
+
+def siteDescription():
+    sites='The list of sites your results will depend on. (multiple choices seperated by ",").\n'
+    sites+='When choosing the option all, the results will be based on the following list: linkedin.com,\n'
+    sites+='\tfacebook.com,\n'
+    sites+='\tinstagram.com,\n'
+    sites+='\tgithub.com,\n'
+    sites+='\tgiters.com,\n'
+    sites+='\treddit.com,\n'
+    sites+='\tgeeksforgeeks.org,\n'
+    sites+='\tw3schools.com,\n'
+    sites+='\tstackoverflow.com,\n'
+    sites+='\tmedium.com,\n'
+    sites+='\tX.com,\n'
+    sites+='\tpinterest.com,\n'
+    sites+='\tyoutube.com,\n'
+    sites+='\twiki.python.org,\n'
+    sites+='\tdocs.python.org'
+    return sites
+
 parser = ArgumentParser(
-    description='A simple command-line tool for automating search on Google.', 
+    description=logo(), 
     usage='pydorks [query ...] [-h] [-w [WORD]] [-n [NOTWORD]] [-i [INTEXT ...]] [-u [INURL]] [-a [ALLINURL ...]] [-s [SITES]]'
-    )
+)
 parser.add_argument('query', help='The keywords and/or phrases you want to search for.', type=str, nargs='*')
 parser.add_argument('-w', '--word', help='Show results with this word exactly. Do not include similar words. ', type=str, nargs='?')
 parser.add_argument('-n', '--notword', help='Do not include this word in search results or queries.', type=str, nargs='?')
@@ -37,8 +68,14 @@ parser.add_argument('-f', '--filetype', help='Search only for files, not webpage
 parser.add_argument('-r', '--related', help='Find website results that are related to your search term.', type=str, nargs='?')
 parser.add_argument('-o', '--info', help='Find supplemental information Google may have on this page. ( useful for finding cached pages )', type=str, nargs='?')
 parser.add_argument('-l', '--link', help='Find other pages indexed by Google that reference this link.', type=str, nargs='?')  
-parser.add_argument('-s', '--sites', help='The list of sites your results will depend on. (multiple choices seperated by ",")', type=str, nargs='?', default='google')
+parser.add_argument('-s', '--sites', help=siteDescription(), type=str, nargs='?', default='google')
 
+def siteDescription():
+    print(
+        """
+        
+      \n""")
+    
 try:
     args: Namespace = parser.parse_args()
 except ArgumentError as err:
@@ -214,10 +251,9 @@ class SiteFilter:
     def sites_selected(self) -> str:
         wanted_sites = args.sites.split(',')
         for index, site in enumerate(wanted_sites):
-            if main_websites[site]:
-                self.filter += "site: " + main_websites[site]
-                if index != len(wanted_sites) - 1:
-                    self.filter += " OR "
+            self.filter += "site:*." + site + ".*"
+            if index != len(wanted_sites) - 1:
+                self.filter += " OR "
         self.filter += " ) "
         return self.filter
 
