@@ -241,7 +241,7 @@ class SiteFilter:
     
     def sites_all(self) -> str:
         for index, value in enumerate(main_websites):
-            self.filter += "site: " + value
+            self.filter += "site:" + main_websites[value]
             if index != len(main_websites) - 1:
                 self.filter += " OR "
             else:
