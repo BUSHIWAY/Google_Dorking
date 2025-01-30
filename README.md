@@ -6,11 +6,11 @@
 
 
 ## Installation 
-``
+```bash
 $ git clone https://github.com/BUSHIWAY/Google_Dorking.git
-``
+```
 
 ## Usage
-``
+```bash
 $ python pydorks.py -site python,github
-``
+```
